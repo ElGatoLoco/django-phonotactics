@@ -1,0 +1,19 @@
+.sliderContainer {
+	position: relative;
+	display: inline-block;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+}
+
+.slider {
+	min-width: 270px; 
+	margin-top: -4px;
+	position: absolute !important;
+}
+
+.sliderLabel {
+	font-weight: bold; 
+	font-size: 22px; 
+	margin-left: 285px;
+	vertical-align: middle;
+}

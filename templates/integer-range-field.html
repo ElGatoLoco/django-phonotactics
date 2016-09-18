@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "css/jquery-ui.min.css" %}">
+<link rel="stylesheet" href="{% static "css/style.css" %}">
+<script src="{% static "js/jquery-1.10.2.min.js" %}"></script>
+<script src="{% static "js/jquery-ui.min.js" %}"></script>
+
+<script>
+$(function() {
+  $("#{{name}}Slider").slider({
+    range: "min",
+    min: {{minValue}},
+    max: {{maxValue}},
+    value: $("#{{name}}").val(),
+    slide: function(event, ui) {
+      $("#{{name}}").val(ui.value);
+      $("#{{name}}Label").html(ui.value);
+    }
+  });
+  $("#{{name}}Label").html($("#{{name}}").val());
+});
+</script>
+
+<div class="sliderContainer">
+  <div id="{{name}}Slider" class="col-md-4 col-md-offset-4 slider"></div>
+</div>
+<span id="{{name}}Label" class="sliderLabel"></span>
+<input id="{{name}}" type="hidden" name="{{ name }}" value="{{ value }}" />

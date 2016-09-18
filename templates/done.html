@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<div class="alert alert-info">
+		{% for x,y in info %}
+			<div class="row">
+				<div class="col-md-6 text-right-lg">{{ x }}:</div>
+				<div class="col-md-6"><b>{{ y }}</b></div>
+			</div>
+			{% if not forloop.last %}
+				<hr class="hidden-md hidden-lg">
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<th>Word</th>
+			<th class="text-center">Probability</th>
+			<th>Details</th>
+		</thead>
+		<tbody>
+		{% for k,v in probability.iteritems reversed %}
+			<tr>
+				<td>{{ k }}</td>
+				<td class="text-center">{{ v.0|floatformat:7 }}</td>
+				<td>
+					{% for k,v in v.1 %}
+						<b>{{ k }}</b>: {{ v|floatformat:3 }}{% if not forloop.last %}, {% endif %}
+				{% endfor %}
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	</div>
+{% endblock content %}

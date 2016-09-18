@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head %}
+	{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+	<form method="post" enctype="multipart/form-data" novalidate="novalidate">{% csrf_token %}
+		{{ wizard.form.media }}
+		{{ wizard.management_form }}
+		{% if wizard.form.forms %}
+		    {{ wizard.form.management_form }}
+		    {% for form in wizard.form.forms %}
+		        {{ form.as_p }}
+		    {% endfor %}
+		{% else %}
+		    {{ wizard.form.as_p }}
+		{% endif %}
+
+		
+		<div class="col-xs-12">
+			<hr>
+		{% if wizard.steps.prev %}
+			<button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" 
+				class="btn btn-lg">
+				{% trans "Back" %}
+			</button>
+		{% endif %}
+		<input type="submit" name="submit" 
+		{% if wizard.steps.next %}
+		value="{% trans "Next" %}"
+		{% else %}
+		value="{% trans "Submit" %}"
+		{% endif %}
+		class="btn btn-lg btn-custom pull-right" />
+		</div>
+	</form>
+{% endblock %}
+
