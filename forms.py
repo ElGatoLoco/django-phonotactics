@@ -1,6 +1,5 @@
 from django import forms
 
-from .models import Word
 from .widgets import RadioCustomRenderer, IntegerRangeWidget
 
 SEGMENT = (
@@ -21,6 +20,19 @@ SUM_OR_AV = (
 )
 
 class MainForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(MainForm, self).__init__(*args, **kwargs)
+
+        # Hack to prevent OperationalError and still get max and default value
+        # for IntegerRangeWidget load dynamically.
+        from .models import Word
+        self.fields['number_of_words_in_corpus'].widget = IntegerRangeWidget(
+            attrs={
+                'min_value':10,
+                'max_value':Word.objects.count(),
+                'default':Word.objects.count(),
+            })
+
     segment_size = forms.ChoiceField(
         choices=SEGMENT, 
         initial=SEGMENT[0][0],
@@ -36,12 +48,7 @@ class MainForm(forms.Form):
         initial=SUM_OR_AV[1][0],
         widget=forms.RadioSelect(renderer=RadioCustomRenderer)
     )
-    number_of_words_in_corpus = forms.CharField(
-        widget=IntegerRangeWidget(attrs={
-            'min_value':10,
-            'max_value':Word.objects.count(),
-            'default':Word.objects.count(),
-        }))
+    number_of_words_in_corpus = forms.CharField()
 
 
 class TextForm(forms.Form):
