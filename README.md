@@ -15,23 +15,25 @@ PREREQUISITES:
 
 -----------
 
-0. Install prerequisites and the phonotactics app with pip::
+USAGE:
+
+1. Install prerequisites and the phonotactics app with pip::
 	
-	pip install django django-formtools django-phonotactics
+	'pip install django django-formtools django-phonotactics'
 
+2. Add prerequisites and "phonotactics" app to your INSTALLED_APPS setting like this::
+	``` 
+	INSTALLED_APPS = [
+	        ...
+	        'formtools',
+	        'phonotactics',
+	    ]
+	```
 
-1. Add prerequisites and "phonotactics" app to your INSTALLED_APPS setting like this::
+3. Include the phonotactics URLconf in your project urls.py like this::
 
-    INSTALLED_APPS = [
-        ...
-        'formtools',
-        'phonotactics',
-    ]
+    `url(r'^', include('phonotactics.urls')),`
 
-2. Include the phonotactics URLconf in your project urls.py like this::
+4. Run `python manage.py migrate` to create the phonotactics models.
 
-    url(r'^', include('phonotactics.urls')),
-
-3. Run `python manage.py migrate` to create the phonotactics models.
-
-4. Run `python manage.py loaddata words.json` to load the basic corpus.
+5. Run `python manage.py loaddata words.json` to load the basic corpus.
